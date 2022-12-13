@@ -1,0 +1,69 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{#    <link rel="stylesheet" href="{% static '/style/style.css' %}">#}
+    <title>CarDealerShip</title>
+</head>
+
+<body>
+<div id="box">
+    <header>
+        <!-- Navigation Bar -->
+        <h1><a class="index-navigation" href="{% url 'index' %}"><span>C</span>ARS <span>D</span>EALER <span>S</span>HIP</a></h1>
+        <nav>
+{#            <a href="{% url 'catalogue' %}">Catalogue</a>#}
+{#            <a href="{% url 'car create' %}">Create Car</a>#}
+            <a href="{% url 'details user' pk=object.pk %}">Profile</a>
+        </nav>
+    </header>
+
+    <!-- profile details section -->
+    <section id="car-details">
+        <h1>Profile Details</h1>
+        <div class="info-section">
+            <div class="car-header">
+                <!-- default profile image (if the user does NOT have any)-->
+                {% if not profile.profile_picture %}
+{#                    <img class="car-img" src="{% static '/images/default-profile.png' %}" alt='profile-image'/>#}
+                <!-- if the user has a profile image -->
+                {% else %}
+{#                    <img class="car-img" src="{{ profile.profile_picture }}" alt='profile-image'/>#}
+                {% endif %}
+                <!-- user full name (if any) -->
+                {% if object.first_name and object.last_name %}
+                <h1>{{ object.first_name }} {{ object.last_name }}</h1>
+                {% elif object.first_name %}
+                <h1>{{ object.first_name }}</h1>
+                {% elif object.last_name %}
+                <h1>{{ object.last_name }}</h1>
+                {% endif %}
+                <!-- user username -->
+                <p class="description">Username: {{ object.username }}</p>
+                <!-- user email -->
+                <p class="description">Email: {{ object.email }}</p>
+                <!-- user age -->
+                <p class="description">Gender: {{ object.gender }}</p>
+                <!-- total price of all cars -->
+{#                <p class="description">Total price: {{ cars_price|floatformat:3 }}</p>#}
+                <!-- Edit/Delete buttons -->
+                <div class="buttons">
+                    <a href="{% url 'edit user' pk=object.pk %}" class="edit-button">Edit</a>
+                    <a href="{% url 'delete user' pk=object.pk %}" class="delete-button">Delete</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer -->
+    <footer>
+        &copy;Kris Team 2022. All rights reserved.
+    </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{#    <link rel="stylesheet" href="{% static '/style/style.css' %}">#}
+    <title>CarDealerShip</title>
+</head>
+<body>
+  <header>
+        <!-- Navigation Bar -->
+        <h1><a class="index-navigation" href="{% url 'index' %}"><span>C</span>ARS <span>D</span>EALER <span>S</span>HIP</a></h1>
+        <nav>
+{#            <a href="{% url 'catalogue' %}">Catalogue</a>#}
+{#            <a href="{% url 'car create' %}">Create Car</a>#}
+            <a href="{% url 'details user' pk=object.pk %}">Profile</a>
+        </nav>
+    </header>
+
+  <section id="create-page" class="auth">
+
+      <div class="container">
+        <h1>Are you sure you want to delete your profile?</h1>
+          <!-- Delete Profile Form -->
+        <form id='delete' method="post" action="{% url 'delete user' pk=object.pk%}">
+        {{ form }}
+        <!-- Confirm Button -->
+        <input class="btn submit" type="submit" value="Yes">
+            {% csrf_token %}
+
+        </form>
+      </div>
+    <!-- End Delete Profile Form -->
+  </section>
+  <!-- Footer -->
+  <footer>
+      &copy;Kris Team 2022. All rights reserved.
+  </footer>
+  <!-- End Footer -->
+</body>
+</html>

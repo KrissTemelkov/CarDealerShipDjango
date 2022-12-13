@@ -1,0 +1,46 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{#    <link rel="stylesheet" href="{% static '/style/style.css' %}">#}
+    <title>CarDealerShip</title>
+</head>
+
+<body>
+<div id="box">
+    <header>
+
+        <!-- navigation bar -->
+        <h1><a class="index-navigation" href="{% url 'index' %}"><span>C</span>ARS <span>D</span>EALER <span>S</span>HIP</a></h1>
+        <nav>
+            # add nav!!!
+        </nav>
+    </header>
+
+    <!-- create profile form -->
+    <section id="register-page" class="content auth">
+        <form id="register" method="post" action="{% url 'login user' %}">
+            <div class="container">
+                <div class="brand-logo"></div>
+                <h1>LogIn</h1>
+                {{ form }}
+
+                <input class="btn submit" type="submit" value="Create Profile">
+                {% csrf_token %}
+            </div>
+        </form>
+    </section>
+
+    <!-- footer -->
+    <footer>
+        &copy;Kris Team 2022. All rights reserved.
+    </footer>
+
+</div>
+</body>
+</html>
