@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-{#    <link rel="stylesheet" href="{% static '/style/style.css' %}">#}
+    <link rel="stylesheet" href="{% static '/style/style.css' %}">
     <title>CarDealerShip</title>
 </head>
 
@@ -29,8 +29,9 @@
                 <div class="brand-logo"></div>
                 <h1>LogIn</h1>
                 {{ form }}
+                <input type="hidden" name="next" value="{{ next }}">
 
-                <input class="btn submit" type="submit" value="Create Profile">
+                <input class="btn submit" type="submit" value="Login">
                 {% csrf_token %}
             </div>
         </form>

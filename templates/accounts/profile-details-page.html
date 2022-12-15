@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-{#    <link rel="stylesheet" href="{% static '/style/style.css' %}">#}
+    <link rel="stylesheet" href="{% static '/style/style.css' %}">
     <title>CarDealerShip</title>
 </head>
 
@@ -17,9 +17,9 @@
         <!-- Navigation Bar -->
         <h1><a class="index-navigation" href="{% url 'index' %}"><span>C</span>ARS <span>D</span>EALER <span>S</span>HIP</a></h1>
         <nav>
-{#            <a href="{% url 'catalogue' %}">Catalogue</a>#}
-{#            <a href="{% url 'car create' %}">Create Car</a>#}
-            <a href="{% url 'details user' pk=object.pk %}">Profile</a>
+            <a href="{% url 'catalogue' %}">Catalogue</a>
+            <a href="{% url 'car create' %}">Create Car</a>
+            <a href="{% url 'logout user' %}">Log Out</a>
         </nav>
     </header>
 
@@ -47,14 +47,20 @@
                 <p class="description">Username: {{ object.username }}</p>
                 <!-- user email -->
                 <p class="description">Email: {{ object.email }}</p>
-                <!-- user age -->
+
+                {% if object.gender %}
                 <p class="description">Gender: {{ object.gender }}</p>
+                {% endif %}
                 <!-- total price of all cars -->
-{#                <p class="description">Total price: {{ cars_price|floatformat:3 }}</p>#}
-                <!-- Edit/Delete buttons -->
+{#                <p class="description">Balance: {{ cars_price|floatformat:3 }}</p>#}
+{#                <p class="description">Cars for sale: {{ cars_sale }}</p>#}
+
                 <div class="buttons">
-                    <a href="{% url 'edit user' pk=object.pk %}" class="edit-button">Edit</a>
-                    <a href="{% url 'delete user' pk=object.pk %}" class="delete-button">Delete</a>
+                    {% if is_owner %}
+                        <a href="{% url 'edit user' pk=object.pk %}" class="edit-button">Edit</a>
+                        <a href="{% url 'delete user' pk=object.pk %}" class="delete-button">Delete</a>
+                    {% endif %}
+{#                    <a href="{% url 'wish_user' pk=object.pk %}" class="edit-button">Wish list</a>#}
                 </div>
             </div>
         </div>

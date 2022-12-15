@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-{#    <link rel="stylesheet" href="{% static '/style/style.css' %}">#}
+    <link rel="stylesheet" href="{% static '/style/style.css' %}">
     <title>CarDealerShip</title>
 </head>
 <body>
@@ -14,9 +14,10 @@
         <!-- Navigation Bar -->
         <h1><a class="index-navigation" href="{% url 'index' %}"><span>C</span>ARS <span>D</span>EALER <span>S</span>HIP</a></h1>
         <nav>
-{#            <a href="{% url 'catalogue' %}">Catalogue</a>#}
-{#            <a href="{% url 'car create' %}">Create Car</a>#}
+            <a href="{% url 'catalogue' %}">Catalogue</a>
+            <a href="{% url 'car create' %}">Create Car</a>
             <a href="{% url 'details user' pk=object.pk %}">Profile</a>
+            <a href="{% url 'logout user' %}">Log Out</a>
         </nav>
     </header>
 
@@ -25,7 +26,7 @@
       <div class="container">
         <h1>Are you sure you want to delete your profile?</h1>
           <!-- Delete Profile Form -->
-        <form id='delete' method="post" action="{% url 'delete user' pk=object.pk%}">
+        <form id='delete' method="post" action="{% url 'delete user' pk=request.user.pk %}">
         {{ form }}
         <!-- Confirm Button -->
         <input class="btn submit" type="submit" value="Yes">

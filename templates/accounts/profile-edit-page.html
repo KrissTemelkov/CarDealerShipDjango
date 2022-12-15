@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-{#    <link rel="stylesheet" href="{% static '/style/style.css' %}">#}
+    <link rel="stylesheet" href="{% static '/style/style.css' %}">
     <title>CarDealerShip</title>
 </head>
 
@@ -16,9 +16,10 @@
         <!-- Navigation Bar -->
         <h1><a class="index-navigation" href="{% url 'index' %}"><span>C</span>ARS <span>D</span>EALER <span>S</span>HIP</a></h1>
         <nav>
-{#            <a href="{% url 'catalogue' %}">Catalogue</a>#}
-{#            <a href="{% url 'car create' %}">Create Car</a>#}
+            <a href="{% url 'catalogue' %}">Catalogue</a>
+            <a href="{% url 'car create' %}">Create Car</a>
             <a href="{% url 'details user' pk=object.pk %}">Profile</a>
+            <a href="{% url 'logout user' %}">Log Out</a>
         </nav>
     </header>
 
@@ -27,9 +28,32 @@
         <form id="register" method="post" action="{% url 'edit user' pk=object.pk %}">
             <div class="container">
                 <h1>Edit Profile</h1>
+                {% for field in form %}
+                    <p class="error"> {{ field.errors }} </p>
+                    <div class="label-input">
+                        <label>{{ field.label }}</label>
 
-                {{ form }}
+                        {% if not field.label == "Gender:" %}
+                            {{ field }}
+                        {% else %}
+                            <div class="list-choice">
+                                <div class="list-choice-title">Gender</div>
+                                <div class="list-choice-objects">
 
+                                    {% for type, value in form.fields.gender.choices %}
+                                        <label>
+                                            <input type="radio" value="{{ value }}" name="gender"
+                                                {% if form.gender.value == value %}
+                                                checked
+                                                {% endif %}/>
+                                            <span>{{ value }}</span>
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
 
                 <input class="btn" type="submit" value="Edit Profile">
                 {% csrf_token %}
