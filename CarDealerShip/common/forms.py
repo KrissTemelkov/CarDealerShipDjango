@@ -7,6 +7,7 @@ class CarCreateForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = '__all__'
+        exclude = ['user', 'slug', 'name']
 
 
 class CarEditForm(CarCreateForm):
@@ -17,6 +18,7 @@ class CarDeleteForm(CarCreateForm):
     class Meta:
         model = Car
         fields = '__all__'
+        exclude = ['user', 'slug', 'name']
         widgets = {
             'type': forms.TextInput(
                 attrs={

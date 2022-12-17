@@ -1,5 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.core import exceptions, validators
 from django.db import models
+from django.utils.text import slugify
+
+UserModel = get_user_model()
 
 
 def validate_min_length(value):
@@ -26,6 +30,13 @@ class Car(models.Model):
         (MINIBUS, MINIBUS),
         (OTHER, OTHER),
     )
+
+    name = models.CharField(
+        null=True,
+        blank=True,
+        max_length=30,
+    )
+
     type = models.CharField(
         null=False,
         blank=False,
@@ -48,6 +59,7 @@ class Car(models.Model):
         ),
     )
     imageURL = models.URLField(
+        max_length=300,
         null=False,
         blank=False,
     )
@@ -58,3 +70,30 @@ class Car(models.Model):
             validators.MinValueValidator(1),
         )
     )
+
+    slug = models.SlugField(
+        unique=True,
+        null=False,
+        blank=True,
+    )
+
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.RESTRICT,
+    )
+
+    def __str__(self):
+        return slugify(f'{self.model}-{self.id}')
+
+    def save(self, *args, **kwargs):
+
+        super().save(*args, **kwargs)
+        self.name = slugify(f'{self.model}-{self.id}')
+
+        if not self.slug:
+            self.slug = slugify(f'{self.model}-{self.id}')
+
+        return super().save(*args, **kwargs)
+
+
+

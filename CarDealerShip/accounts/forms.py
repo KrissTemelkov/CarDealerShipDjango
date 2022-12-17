@@ -7,6 +7,7 @@ class UserEditForm(auth_forms.UserChangeForm):
     class Meta:
         model = UserModel
         fields = "__all__"
+
         field_classes = {"username": auth_forms.UsernameField}
 
 

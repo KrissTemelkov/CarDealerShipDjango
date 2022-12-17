@@ -26,6 +26,8 @@ INSTALLED_APPS = [
 
     'CarDealerShip.accounts',
     'CarDealerShip.common',
+    'CarDealerShip.photos',
+    'CarDealerShip.wishlist',
 
 ]
 
@@ -67,7 +69,7 @@ WSGI_APPLICATION = 'CarDealerShip.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'NAME': 'CarDealerDB',
         'USER': 'postgres',
         'PASSWORD': 'postgrespw',
         'HOST': '127.0.0.1',

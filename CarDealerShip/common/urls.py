@@ -5,7 +5,7 @@ from CarDealerShip.common.views import index, catalogue, car_edit, car_create, c
 
 urlpatterns = (
     path('', index, name='index'),
-    path('catalogue/', catalogue, name='catalogue'),
+    path('myCars/', catalogue, name='catalogue'),
     path('car/', include([
         path('create/', car_create, name='car create'),
         path('<int:pk>/details/', car_details, name='car details'),

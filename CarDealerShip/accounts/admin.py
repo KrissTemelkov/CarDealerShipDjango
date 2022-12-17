@@ -22,6 +22,7 @@ class UserAdmin(auth_admin.UserAdmin):
             'last_name',
             'email',
             'gender',
+            'imageURL',
         )}),
         (
             'Permissions',

@@ -3,7 +3,9 @@ from django.views import generic as views
 from django.contrib.auth import views as auth_views, get_user_model, login
 # from django.shortcuts import render
 
+
 from CarDealerShip.accounts.forms import UserCreateForm
+from CarDealerShip.common.models import Car
 
 UserModel = get_user_model()
 
@@ -35,13 +37,20 @@ class UserDetailsView(views.DetailView):
         context = super().get_context_data(**kwargs)
 
         context['is_owner'] = self.request.user == self.object
+
+        cars = Car.objects.all()
+        cars = cars.filter(user_id=self.request.user.pk)
+
+        context['size'] = len(cars)
+        context['cars'] = cars
+
         return context
 
 
 class UserEditView(views.UpdateView):
     template_name = 'accounts/profile-edit-page.html'
     model = UserModel
-    fields = ('first_name', 'last_name', 'gender', 'email',)
+    fields = ('first_name', 'last_name', 'gender', 'email', 'imageURL')
 
     def get_success_url(self):
         return reverse_lazy('details user', kwargs={

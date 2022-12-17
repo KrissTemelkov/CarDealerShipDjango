@@ -1,0 +1,83 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/style/style.css' %}">
+    <title>CarDealerShip</title>
+</head>
+
+<body>
+<div id="box">
+    <header>
+
+        <!-- Navigation Bar -->
+        <h1><a class="index-navigation" href="{% url 'index' %}"><span>C</span>ARS <span>D</span>EALER <span>S</span>HIP</a></h1>
+        <nav>
+
+            <!-- if the user has not created a profile -->
+            {% if not request.user.is_authenticated %}
+                <a href="{% url 'register user' %}">Create Profile</a>
+                <a href="{% url 'login user' %}">Login</a>
+
+                <!-- if the user has created a profile -->
+            {% else %}
+                <a href="{% url 'car create' %}">Create Car</a>
+                <a href="{% url 'details user' pk=user.pk %}">Profile</a>
+                <a href="{% url 'logout user' %}">Log Out</a>
+            {% endif %}
+
+
+        </nav>
+    </header>
+
+    <!-- Display paragraph: If there are no cars yet-->
+    {% if not photos %}}
+        <p class="no-articles">No posts yet</p>
+
+        <!-- Display div "car" with information about every car (if any)-->
+    {% else %}
+        <section id="catalogue">
+
+                <!-- first car-->
+            {% for photo in photos %}
+
+                <div class="info-section">
+                <div class="car-header">
+                    <p>
+                        <h4 class="index-navigation">{{ photo.user.username }}</h4>
+                        <div>
+                            <img class="car-li" src="{{ photo.user.imageURL }}" alt='car-image'/>
+                        </div>
+
+                    </p>
+                    <p>
+                    <div class="imgBx">
+                        <!-- car image -->
+                        <img src="{{ photo.imageURL }}" alt="post img">
+                    </div>
+                    <h2 class="index-message">caption: </h2>
+                    <h3 class="index-message">{{ photo.caption }}</h3>
+                    </p>
+
+
+                    <div class="buttons">
+                        <!-- car details button -->
+                        <a href="{% url 'details photo' pk=photo.pk %}" class="details-btn">Details</a>
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
+    {% endif %}
+        </section>
+
+    <!-- footer -->
+    <footer>
+        &copy;SoftUni Team 2022. All rights reserved.
+    </footer>
+</div>
+</body>
+</html>

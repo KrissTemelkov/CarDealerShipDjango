@@ -15,10 +15,23 @@
 <div id="box">
     <header>
 
-        <!-- navigation bar -->
+        <!-- Navigation Bar -->
         <h1><a class="index-navigation" href="{% url 'index' %}"><span>C</span>ARS <span>D</span>EALER <span>S</span>HIP</a></h1>
         <nav>
-            # add nav!!!
+
+            <a href="{% url 'posts' %}">Posts</a>
+            <!-- if the user has not created a profile -->
+            {% if not request.user.is_authenticated %}
+                <a href="{% url 'register user' %}">Create Profile</a>
+
+                <!-- if the user has created a profile -->
+            {% else %}
+                <a href="{% url 'car create' %}">Create Car</a>
+                <a href="{% url 'details user' pk=user.pk %}">Profile</a>
+                <a href="{% url 'logout user' %}">Log Out</a>
+            {% endif %}
+
+
         </nav>
     </header>
 

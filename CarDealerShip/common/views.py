@@ -5,20 +5,19 @@ from CarDealerShip.common.models import Car
 
 
 def index(request):
-    loged = request.user.is_authenticated
-    context = {
-        'loged': loged
-    }
-    return render(request, 'common/index.html', context)
+    return render(request, 'common/index.html')
 
 
 def catalogue(request):
     loged = request.user.is_authenticated
     if not loged:
         return redirect('index')
+    cars = Car.objects.all()
+    cars = cars.filter(user_id=request.user.pk)
+
     context = {
-        'size': Car.objects.count(),
-        'cars': Car.objects.all(),
+        'size': len(cars),
+        'cars': cars,
     }
     return render(request, 'common/catalogue.html', context)
 
@@ -29,7 +28,9 @@ def car_create(request):
     else:
         form = CarCreateForm(request.POST)
         if form.is_valid():
-            form.save()
+            car = form.save(commit=False)
+            car.user = request.user
+            car.save()
             return redirect('catalogue')
 
     context = {

@@ -25,6 +25,7 @@ class Gender(ChoicesEnumMixin, Enum):
 
 
 class AppUser(auth_models.AbstractUser):
+    URL_MAX_LEN = 300
     MIN_LEN_FIRST_NAME = 3
     MAX_LEN_FIRST_NAME = 30
     MIN_LEN_LAST_NAME = 3
@@ -59,4 +60,19 @@ class AppUser(auth_models.AbstractUser):
     gender = models.CharField(
         choices=Gender.choices(),
         max_length=Gender.max_len(),
+    )
+
+    imageURL = models.URLField(
+        max_length=URL_MAX_LEN,
+        null=True,
+        blank=True,
+    )
+
+    balance = models.FloatField(
+        default=20000,
+        null=False,
+        blank=False,
+        validators=(
+            validators.MinValueValidator(1),
+        )
     )
