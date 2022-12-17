@@ -2,10 +2,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from CarDealerShip.common.models import Car
+
 from CarDealerShip.wishlist.utils import get_photo_url
 from CarDealerShip.wishlist.forms import PhotoCommentForm, SearchPhotosForm
-from CarDealerShip.wishlist.models import PhotoWish
+from CarDealerShip.wishlist.models import PhotoWish, PhotoComment
 
 from CarDealerShip.photos.models import Photos
 
@@ -21,20 +21,18 @@ def posts(request):
     if search_pattern:
         photos = photos.filter(tagged_cars__name__icontains=search_pattern)
 
-
-
     context = {
         'photos': photos,
+        'comments': PhotoComment.objects.all(),
         'comment_form': PhotoCommentForm(),
         'search_form': search_form,
     }
-
-        # for wish in PhotoWish.objects.all():
-        #     if photo.pk == wish.photo and wish.user == request.user.pk:
-        #         photo['wished'] = True
-        #     else:
-        #         pass
-        #         # photo['wished'] = False
+    # for wish in PhotoWish.objects.all():
+    #     if photo.pk == wish.photo and wish.user == request.user.pk:
+    #         photo['wished'] = True
+    #     else:
+    #         pass
+    #         # photo['wished'] = False
 
     return render(
         request,
@@ -68,7 +66,8 @@ def comment_photo(request, photo_id):
 
     if form.is_valid():
         comment = form.save(commit=False)
+        comment.user = request.user
         comment.photo = photo
         comment.save()
 
-    return redirect('index')
+    return redirect('posts')

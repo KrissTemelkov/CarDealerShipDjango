@@ -48,12 +48,12 @@
                 <div class="info-section">
                 <div class="car-header">
                     <p>
-                        <h4 class="index-navigation">{{ photo.user.username }}</h4>
+                    <h4 class="index-navigation">{{ photo.user.username }}</h4>
                         <div>
+                            <p>
                             <img class="car-li" src="{{ photo.user.imageURL }}" alt='car-image'/>
                         </div>
 
-                    </p>
                     <p>
                     <div class="imgBx">
                         <!-- car image -->
@@ -61,7 +61,7 @@
                     </div>
                     <h2 class="index-message">caption: </h2>
                     <h3 class="index-message">{{ photo.caption }}</h3>
-                    </p>
+
 
 
                     <div class="buttons">
@@ -70,14 +70,61 @@
                     </div>
                 </div>
                 </div>
+
+                <div class="comments">
+                        <div class="top">
+                            {% for coment in comments %}
+                                {% if coment.photo.pk == photo.pk %}
+                            <div class="info-section">
+                                <div class="comment-data">
+                                    <div class="profilepic">
+                                        <div class="car-header">
+                                            <div class="image">
+                                                {% if not coment.user.imageURL %}
+                                                    <img class="car-li" src="{% static '/images/default-profile.png' %}" alt='profile-image'/>
+                                                {% else %}
+                                                    <img class="car-li" src="{{ coment.user.imageURL }}" alt="img8">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        <!-- Link to User Profile Details Page-->
+                                        <!-- User First and/or Last Name or username-->
+                                        <a href="">{{ coment.user.name }}</a>
+                                        <!-- User Comment -->
+                                        {{ coment.text }}
+                                    </p>
+                                </div>
+                                <div class="car-header">
+                                    <span>{{ coment.publication_date_and_time }}</span>
+                                </div>
+                            </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                <div class="addComments">
+                    <div class="reaction">
+                        <h3>
+                            <i class="far fa-smile"></i>
+                        </h3>
+                    </div>
+
+                    <!-- Start Add Comments Form -->
+                    <form method="post" action="{% url 'comment photo' photo_id=photo.pk %}">
+                        {{ comment_form }}
+                        <!-- Post Comments Button -->
+                        <input class="btn" type="submit" value="Comment">
+                        {% csrf_token %}
+                    </form>
+                    <!-- End Add Comments Form -->
+
+                </div>
             {% endfor %}
     {% endif %}
         </section>
-
-    <!-- footer -->
-    <footer>
-        &copy;SoftUni Team 2022. All rights reserved.
-    </footer>
 </div>
 </body>
 </html>
