@@ -68,6 +68,7 @@ def add_photo(request):
     )
 
 
+@login_required
 def edit_photo(request, pk):
     photo = Photos.objects.filter(pk=pk) \
         .get()
@@ -80,6 +81,7 @@ def edit_photo(request, pk):
     )
 
 
+@login_required
 def delete_photo(request, pk):
     photo = Photos.objects.filter(pk=pk) \
         .get()

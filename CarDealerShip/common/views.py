@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from CarDealerShip.common.forms import CarCreateForm, CarEditForm, CarDeleteForm
@@ -22,6 +23,7 @@ def catalogue(request):
     return render(request, 'common/catalogue.html', context)
 
 
+@login_required
 def car_create(request):
     if request.method == 'GET':
         form = CarCreateForm
@@ -48,6 +50,7 @@ def car_details(request, pk):
     return render(request, 'common/car-details.html', context)
 
 
+@login_required
 def car_edit(request, pk):
     car = Car.objects.filter(pk=pk)\
         .get()
@@ -65,6 +68,7 @@ def car_edit(request, pk):
     return render(request, 'common/car-edit.html', context)
 
 
+@login_required
 def car_delete(request, pk):
     car = Car.objects.filter(pk=pk) \
         .get()

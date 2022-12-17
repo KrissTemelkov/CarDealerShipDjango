@@ -39,7 +39,7 @@ class UserDetailsView(views.DetailView):
         context['is_owner'] = self.request.user == self.object
 
         cars = Car.objects.all()
-        cars = cars.filter(user_id=self.request.user.pk)
+        cars = cars.filter(user_id=self.object.pk)
 
         context['size'] = len(cars)
         context['cars'] = cars
@@ -48,6 +48,7 @@ class UserDetailsView(views.DetailView):
 
 
 class UserEditView(views.UpdateView):
+
     template_name = 'accounts/profile-edit-page.html'
     model = UserModel
     fields = ('first_name', 'last_name', 'gender', 'email', 'imageURL')
