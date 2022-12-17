@@ -14,7 +14,7 @@ def posts(request):
     search_form = SearchPhotosForm(request.GET)
     search_pattern = None
     if search_form.is_valid():
-        search_pattern = search_form.cleaned_data['car_name']
+        search_pattern = search_form.cleaned_data['car_model']
 
     photos = Photos.objects.all()
 

@@ -7,7 +7,7 @@ from CarDealerShip.photos.models import Photos
 class PhotoBaseForm(forms.ModelForm):
     class Meta:
         model = Photos
-        exclude = ('publication_date', 'user')
+        exclude = ('publication_date', 'user', 'name')
 
 
 class PhotoCreateForm(PhotoBaseForm):
@@ -17,7 +17,7 @@ class PhotoCreateForm(PhotoBaseForm):
 class PhotoEditForm(PhotoBaseForm):
     class Meta:
         model = Photos
-        exclude = ('publication_date', 'photo', 'user')
+        exclude = ('publication_date', 'photo', 'user', 'name')
 
 
 class PhotoDeleteForm(PhotoBaseForm):
@@ -26,7 +26,7 @@ class PhotoDeleteForm(PhotoBaseForm):
 
         model = Photos
         fields = '__all__'
-        exclude = ('publication_date', 'user')
+        exclude = ('publication_date', 'user', 'name')
         widgets = {
             'caption': forms.TextInput(
                 attrs={

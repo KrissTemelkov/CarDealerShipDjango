@@ -34,3 +34,83 @@
 
         </nav>
     </header>
+
+<section id="catalogue">
+
+                <!-- first car-->
+
+                <div class="info-section">
+                <div class="car-header">
+                    <p>
+                    <h4 class="index-navigation">{{ photo.user.username }}</h4>
+                        <div>
+                            <p>
+                            <img class="car-li" src="{{ photo.user.imageURL }}" alt='car-image'/>
+                        </div>
+
+                    <p>
+                    <div class="imgBx">
+                        <!-- car image -->
+                        <img class="landscape" src="{{ photo.imageURL }}" alt="post img">
+                    </div>
+                    <h2 class="index-message">caption: </h2>
+                    <h3 class="index-message">{{ photo.caption }}</h3>
+
+
+
+                    <div class="buttons">
+                        <!-- car details button -->
+                        {% if is_owner %}
+                            <a href="{% url 'edit photo' pk=photo.pk %}" class="details-btn">Edit Photo</a>
+                            <a href="{% url 'delete photo' pk=photo.pk %}" class="delete-button">Delete Photo</a>
+                        {% endif %}
+                    </div>
+                </div>
+                </div>
+
+                <div class="comments">
+                        <div class="top">
+                            {% for coment in comments %}
+                                {% if coment.photo.pk == photo.pk %}
+                            <div class="info-section">
+                                <div class="comment-data">
+                                    <div class="profilepic">
+                                        <div class="car-header">
+                                            <div class="image">
+                                                {% if not coment.user.imageURL %}
+                                                    <img class="car-li" src="{% static '/images/default-profile.png' %}" alt='profile-image'/>
+                                                {% else %}
+                                                    <img class="car-li" src="{{ coment.user.imageURL }}" alt="img8">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        <!-- Link to User Profile Details Page-->
+                                        <!-- User First and/or Last Name or username-->
+                                        <a href="">{{ coment.user.name }}</a>
+                                        <!-- User Comment -->
+                                        {{ coment.text }}
+                                    </p>
+                                </div>
+                                <div class="car-header">
+                                    <span>{{ coment.publication_date_and_time }}</span>
+                                </div>
+                            </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Start Add Comments Form -->
+                    <form method="post" action="{% url 'comment photo' photo_id=photo.pk %}">
+                        {{ comment_form }}
+                        <!-- Post Comments Button -->
+                        <input class="btn" type="submit" value="Comment">
+                        {% csrf_token %}
+                    </form>
+                    <!-- End Add Comments Form -->
+        </section>
+</div>
+</body>
+</html>

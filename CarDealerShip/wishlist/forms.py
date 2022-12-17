@@ -19,7 +19,7 @@ class PhotoCommentForm(forms.ModelForm):
 
 
 class SearchPhotosForm(forms.Form):
-    car_name = forms.CharField(
+    car_model = forms.CharField(
         max_length=50,
         required=False,
     )

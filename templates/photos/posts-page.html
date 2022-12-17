@@ -34,8 +34,16 @@
         </nav>
     </header>
 
+
+    <form class="searchbar" method="get" action="{% url 'posts' %}">
+                {{ search_form }}
+                <button>
+                    <img src="{% static 'images/search.png' %}" height="18" alt="img2">
+                </button>
+                {% csrf_token %}
+    </form>
     <!-- Display paragraph: If there are no cars yet-->
-    {% if not photos %}}
+    {% if not photos %}
         <p class="no-articles">No posts yet</p>
 
         <!-- Display div "car" with information about every car (if any)-->
@@ -55,10 +63,13 @@
                         </div>
 
                     <p>
+                    <div class="image">
                     <div class="imgBx">
                         <!-- car image -->
-                        <img src="{{ photo.imageURL }}" alt="post img">
+                        <img class="landscape" src="{{ photo.imageURL }}" alt="post img">
                     </div>
+                    </div>
+
                     <h2 class="index-message">caption: </h2>
                     <h3 class="index-message">{{ photo.caption }}</h3>
 
@@ -67,6 +78,7 @@
                     <div class="buttons">
                         <!-- car details button -->
                         <a href="{% url 'details photo' pk=photo.pk %}" class="details-btn">Details</a>
+
                     </div>
                 </div>
                 </div>
@@ -105,12 +117,7 @@
                         </div>
                     </div>
 
-                <div class="addComments">
-                    <div class="reaction">
-                        <h3>
-                            <i class="far fa-smile"></i>
-                        </h3>
-                    </div>
+
 
                     <!-- Start Add Comments Form -->
                     <form method="post" action="{% url 'comment photo' photo_id=photo.pk %}">
@@ -120,8 +127,6 @@
                         {% csrf_token %}
                     </form>
                     <!-- End Add Comments Form -->
-
-                </div>
             {% endfor %}
     {% endif %}
         </section>

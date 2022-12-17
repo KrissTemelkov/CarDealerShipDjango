@@ -4,6 +4,8 @@ from django.urls import reverse
 
 from CarDealerShip.photos.forms import PhotoCreateForm, PhotoEditForm, PhotoDeleteForm
 from CarDealerShip.photos.models import Photos
+from CarDealerShip.wishlist.forms import PhotoCommentForm
+from CarDealerShip.wishlist.models import PhotoComment
 
 
 def details_photo(request, pk):
@@ -16,6 +18,8 @@ def details_photo(request, pk):
         'photo': photo,
         'has_user_wish_photo': user_wish_photos,
         'is_owner': request.user == photo.user,
+        'comments': PhotoComment.objects.all(),
+        'comment_form': PhotoCommentForm(),
     }
 
     return render(
@@ -70,7 +74,7 @@ def edit_photo(request, pk):
     return get_post_photo_form(
         request,
         PhotoEditForm(request.POST or None, instance=photo),
-        success_url=reverse('index'),
+        success_url=reverse('posts'),
         template_path='photos/photo-edit-page.html',
         pk=pk,
     )
@@ -82,7 +86,7 @@ def delete_photo(request, pk):
     return get_post_photo_form(
         request,
         PhotoDeleteForm(request.POST or None, instance=photo),
-        success_url=reverse('index'),
+        success_url=reverse('posts'),
         template_path='photos/photo-delete-page.html',
         pk=pk,
     )

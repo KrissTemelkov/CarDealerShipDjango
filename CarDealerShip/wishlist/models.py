@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils.text import slugify
 
 from CarDealerShip.photos.models import Photos
 
@@ -31,6 +32,9 @@ class PhotoComment(models.Model):
         UserModel,
         on_delete=models.RESTRICT,
     )
+
+    def __str__(self):
+        return slugify(f'post-{self.photo.id}, date-{self.publication_date_and_time}')
 
 
 class PhotoWish(models.Model):

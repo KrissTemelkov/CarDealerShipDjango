@@ -1,6 +1,7 @@
 from django.db import models
 from django.core import validators
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
 
 from CarDealerShip.common.models import Car
 
@@ -17,6 +18,12 @@ class Photos(models.Model):
         validators=(
             validators.MinLengthValidator(MIN_DESCRIPTION_LENGTH),
         ),
+    )
+
+    name = models.CharField(
+        null=True,
+        blank=True,
+        max_length=30,
     )
 
     tagged_cars = models.ManyToManyField(
@@ -43,3 +50,12 @@ class Photos(models.Model):
         blank=True,
     )
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        cars_names = []
+        for car in self.tagged_cars.all():
+            cars_names.append(car.name)
+        self.name = slugify(f'{" ".join(cars_names)}, date-{self.user}')
+
+        return super().save(*args, **kwargs)

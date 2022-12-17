@@ -5,7 +5,7 @@ from CarDealerShip.photos.models import Photos
 
 @admin.register(Photos)
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'publication_date', 'cars')
+    list_display = ('cars', 'pk', 'publication_date')
 
     @staticmethod
     def cars(current_photo_obj):
